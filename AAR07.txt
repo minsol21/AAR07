@@ -1,0 +1,41 @@
+Task 7.2 Simple odometry
+We want to study the simple case of odometry from part 5 of the course. Consider a robot moving with a differential drive with axis length b = 1. The robots pose is described through its position (x, y) in the world and its heading θ.
+a) Write code to simulate the robot driving in a straight line along the x-axis, starting from (0, 0). 
+Use the equations on slide 24 of the presentation, to implement the kinematic model. 
+Also, implement a sensor that computes the odometry based on the displacement of the robot. 
+Repeat several (for example, 100) runs of the robot 
+and create a 2-dimensional histogram of the final position of the robot 
+and compare it against the measured odometry.
+
+b) Extend your code to introduce errors ε_right ∈ N(0,σright^2 ) and ε_left ∈ N(0,σleft^2 ) to the velocities of the right left wheel of your robot. 
+You can assume that the odometry measurement remains perfect. 
+Again, create a histogram of the actual and estimated final position of the robot. 
+
+Then, have the robot follow a circular path and plot again the histogram for the actual and estimated final position of the robot.
+c) Extend your code to also introduce noise in the odometry measurement of the robot: ε_od_right ∈ N (0, σ_od_right^2 ) 
+and ε_od_left ∈ N(0,σ_od_left^2 ),with εi <εi_od, for i∈{right,left}. 
+Have your robot drive a circular path. 
+Consider the following three cases: 
+(i) the robot drives without taking the odometry into account, 
+(ii) the robot makes corrections based on the perfect odometry estimation, and 
+(iii) the robot makes corrections based on the noisy odometry estimation. 
+
+For each case, plot the histograms of the actual and estimated final position.
+
+
+
+Use following equation to implement kinematics.
+
+odometry for a differential drive robot 
+robot pose pt = [x; y; θ] and update: pt+1 = pt + [Δx; Δy; Δθ]
+
+kinematic model:
+[Δx; Δy; Δθ] = [ cos(θ)/2  cos(θ)/2 ;  sin(θ)/2  sin(θ)/2 ; 1/b    -1/b] [vr ; vl]
+
+b: robot width
+vl: velocity left wheel
+vr: velocity right wheel
+θ: robot heading differential drive
+
+pose update based on odometry:
+[Δx^od; Δy^od; Δθ^od] = [ (Δd^left + Δd^right) cos(θ)/2   ;   (Δd^left + Δd^right) sin(θ)/2 ; (Δd^right - Δd^left)/b ]
